@@ -3,7 +3,7 @@
 $TestConnection = powershell -command "& {. $dossier\TestConnection.ps1;TestConnection }"  
 
 #Message de l'état de connection Internet
-@{$True="Connection internet ok";$False="Problème de connection à internet - Mise à jour non effectuée"}[$TestConnection -eq "TRUE"]
+@{$True="Connection internet ok";$False="Internet connection failed - Update no executed "}[$TestConnection -eq "TRUE"]
 
 switch($TestConnection)
 {
