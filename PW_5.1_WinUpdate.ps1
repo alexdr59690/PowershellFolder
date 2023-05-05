@@ -10,10 +10,10 @@ switch($TestConnection)
 #Connection réussi
     $True {
        #importation de la fonction de mise à jour
-       powershell -command "&{. $dossier\Update.ps1;Update}"
+       powershell -command "& {. $dossier\Update.ps1;UpdateData }"
     }
 #Connection erreur
     $False {
-    Write-Error "Problème de connection internet - Mise à jour non effectuée"
+    Write-Error "Internet connection failed - No update founded"
     }
 }

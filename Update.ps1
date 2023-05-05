@@ -1,22 +1,22 @@
-﻿function Update
+﻿function UpdateData
 {   
     #Recherche de mise à jour dans le catalogue windows update
+    Write-Warning "Research update"
     $update = Get-WUList
-#Totaliser le nombre mise à jour à faire
+    #Totaliser le nombre mise à jour à faire
     $nbUpdateToDo = $update.count
-    
+    Write-Warning ("Number of updates found : " + $nbUpdateToDo)
     if($nbUpdateToDo -gt 0 ) 
     { 
     #Début de l'installation
-        Write-host "...Start installation..."
+        Write-host "...Starting installation..."
 	    foreach($items in $update)
 	    {
 			try
 			{
-				Write-Warning "---Start... ---" 
-				Write-Warning $items.KB $items.Title
+				Write-Warning ("---Starting update : " + $items.KB)
 				Install-WindowsUpdate -AcceptAll -install
-				Write-Warning "---Finished.... : " + $items.KB
+				Write-Warning ("---Update completed : " + $items.KB)
 			}
 			catch
 			{
@@ -24,7 +24,7 @@
 			}
 	    }
 #Message de fin de mise à jour
-        write-host @{$true="--- Update is finished ---";$false="--- Update are finished ---"}[$nbUpdateToDo -eq 1]
+        write-host @{$true="--- Update is finished ---";$false="--- Updates are finished ---"}[$nbUpdateToDo -eq 1]
 
 #Vérifier si le pc doit redémarre        
         $status = Get-WURebootStatus
