@@ -5,7 +5,7 @@
     $update = Get-WUList
     #Totaliser le nombre mise à jour à faire
     $nbUpdateToDo = $update.count
-    Write-Host [(Get-Date).ToLongTimeString()] "Number of updates found : " + $nbUpdateToDo
+    Write-Host [(Get-Date).ToLongTimeString()] "Number of updates found : " $nbUpdateToDo
     
     
     if($nbUpdateToDo -gt 0 ) 
@@ -16,9 +16,9 @@
 	    {
 			try
 			{
-				Write-Host [(Get-Date).ToLongTimeString()] "Starting update : " + $items.KB
+				Write-Host [(Get-Date).ToLongTimeString()] "Starting update : " $items.KB
 				Install-WindowsUpdate -AcceptAll -install
-				Write-Host [(Get-Date).ToLongTimeString()] "Update completed : " + $items.KB
+				Write-Host [(Get-Date).ToLongTimeString()] "Update completed : " $items.KB
 			}
 			catch
 			{
@@ -38,11 +38,11 @@
         }
         else 
         { 
-            Write-Host [(Get-Date).ToLongTimeString()] "Not necessary to restart computer ---";
+            Write-Host [(Get-Date).ToLongTimeString()] "Not necessary to restart computer";
         }   
     }
 else
 { 
-	Write-Host [(Get-Date).ToLongTimeString()] "No update found , Pc is up to date ---" 
+	Write-Host [(Get-Date).ToLongTimeString()] "No update found , Pc is up to date" 
 }
 }
