@@ -1,24 +1,31 @@
 ﻿function UpdateData
 {   
     #Recherche de mise à jour dans le catalogue windows update
-    Write-Host  [(Get-Date).ToLongTimeString()] "Research update"
+    "[ "+((Get-Date)).ToLongTimeString()+" ]"+ " Research update"
     $update = Get-WUList
     #Totaliser le nombre mise à jour à faire
     $nbUpdateToDo = $update.count
-    Write-Host [(Get-Date).ToLongTimeString()] "Number of updates found : " $nbUpdateToDo
+    "[ "+((Get-Date)).ToLongTimeString()+" ]" + " Number of updates found : " + $nbUpdateToDo
     
     
     if($nbUpdateToDo -gt 0 ) 
     { 
     #Début de l'installation
-        Write-Host [(Get-Date).ToLongTimeString()] "Starting installation"
+       "[ "+((Get-Date)).ToLongTimeString() + " ]" + " Starting installation"
 	    foreach($items in $update)
 	    {
 			try
 			{
-				Write-Host [(Get-Date).ToLongTimeString()] "Starting update : " $items.KB
-				Install-WindowsUpdate -AcceptAll -install
-				Write-Host [(Get-Date).ToLongTimeString()] "Update completed : " $items.KB
+				"[ " +((Get-Date)).ToLongTimeString()+" ]"+ " Starting update : " + $items.Title
+				$install = Install-WindowsUpdate -AcceptAll -install
+                if($install[2] -eq "Installed")
+                {
+				    "[ "+((Get-Date)).ToLongTimeString()+" ]" + " Update completed : " + $items.KB
+                }
+                else
+                {
+                     "[ "+((Get-Date)).ToLongTimeString()+ " ]" + " Update failed : " + $items.KB
+                }
 			}
 			catch
 			{
@@ -27,7 +34,7 @@
 			}
 	    }
 #Message de fin de mise à jour
-        write-Host [(Get-Date).ToLongTimeString()] @{$true="Update is finished";$false="Updates are finished"}[$nbUpdateToDo -eq 1]
+        "[ "+((Get-Date)).ToLongTimeString()+" ]" + @{$true="Update is finished";$false="Updates are finished"}[$nbUpdateToDo -eq 1]
 
 #Vérifier si le pc doit redémarre        
         $status = Get-WURebootStatus
@@ -38,11 +45,11 @@
         }
         else 
         { 
-            Write-Host [(Get-Date).ToLongTimeString()] "Not necessary to restart computer";
+            "[ "+((Get-Date)).ToLongTimeString()+" ]" + " Not necessary to restart computer";
         }   
     }
 else
 { 
-	Write-Host [(Get-Date).ToLongTimeString()] "No update found , Pc is up to date" 
+	"[ "+((Get-Date)).ToLongTimeString()+" ]" + " No update found , Pc is up to date" 
 }
 }
