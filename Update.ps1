@@ -34,7 +34,7 @@
 			}
 	    }
 #Message de fin de mise à jour
-        "[ "+((Get-Date)).ToLongTimeString()+" ]" + @{$true="Update is finished";$false="Updates are finished"}[$nbUpdateToDo -eq 1]
+        "[ "+((Get-Date)).ToLongTimeString()+" ] " + @{$true="Update is finished";$false="Updates are finished"}[$nbUpdateToDo -eq 1]
 
 #Vérifier si le pc doit redémarre        
         $status = Get-WURebootStatus
